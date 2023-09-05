@@ -9,12 +9,14 @@ module FactoryBot
 
       object = nil
 
-      ActiveRecord::Base.transaction do
-        instance = FactoryBot.create(factory(model), **)
-        object = deep_clone(instance)
+      #ActiveRecord::Base.transaction do
+        #instance = FactoryBot.create(factory(model), **)
+        #object = deep_clone(instance)
 
-        raise ActiveRecord::Rollback
-      end
+        #raise ActiveRecord::Rollback
+      #end
+      object = FactoryBot.build(factory(model), **)
+      object.id = 42
 
       object
     ensure
@@ -26,15 +28,17 @@ module FactoryBot
 
       objects = []
 
-      ActiveRecord::Base.transaction do
-        instances = FactoryBot.create_list(factory(model), quantity, **)
+      #ActiveRecord::Base.transaction do
+        #instances = FactoryBot.create_list(factory(model), quantity, **)
 
-        instances.each do |instance|
-          objects << deep_clone(instance)
-        end
+        #instances.each do |instance|
+          #objects << deep_clone(instance)
+        #end
 
-        raise ActiveRecord::Rollback
-      end
+        #raise ActiveRecord::Rollback
+      #end
+
+      objects = FactoryBot.build_list(factory(model), quantity, **)
 
       objects
     ensure
