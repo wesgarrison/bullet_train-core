@@ -62,7 +62,6 @@ module BulletTrain::LoadsAndAuthorizesResource
 
       through_as_symbols = Array(through)
 
-      through = []
       through_class_names = []
 
       through_as_symbols.each do |through_as_symbol|
@@ -75,7 +74,6 @@ module BulletTrain::LoadsAndAuthorizesResource
         through_class_name = association.klass.name
 
         begin
-          through << through_class_name.constantize
           through_class_names << through_class_name
         rescue NameError
           raise "Your 'account_load_and_authorize_resource' is broken. We tried to load `#{through_class_name}}` (the class name defined for the `#{through_as_symbol}` association), but couldn't find it."
